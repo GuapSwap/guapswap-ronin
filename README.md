@@ -1,2 +1,2 @@
 # guapswap-ronin
-GuapSwap-Ronin CLI for the Ergo solo miner.
+GuapSwap-Ronin CLI for the solo Ergo miner.
