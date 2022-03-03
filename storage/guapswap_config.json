@@ -1,0 +1,34 @@
+{
+    "node": {
+        "nodeApi": {
+            "apiUrl": "http://127.0.0.1:9053",
+            "apiKey": ""
+        },
+        "wallet": {
+            "mnemonic": "",
+            "password": "",
+            "mnemonicPassword": ""
+        },
+        "networkType": "MAINNET"      
+    },
+    "parameters": {
+        "guapswapProtocolSettings": {
+            "userAddress": "",
+            "serviceFees": {
+                "protocolFeePercentage": 0.0025,
+                "protocolUIFeePercentage": 0.0,
+                "protocolMinerFee": 0.005
+            },
+            "swapIntervalInHours": "1",
+            "dexChoice": "ERGODEX"
+        },
+        "dexSettings": {
+            "ergodexSettings": {
+                "swapAssetTicker": "SigUSD",
+                "slippageTolerancePercentage": 3,
+                "nitro": 1.2,
+                "ergodexMinerFee": 0.005 
+            }
+        }
+    } 
+}
