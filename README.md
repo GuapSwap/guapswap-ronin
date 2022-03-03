@@ -1,5 +1,5 @@
 # guapswap
-GuapSwap CLI for the everyday Ergo miner.
+GuapSwap-Ronin CLI for the solo Ergo miner.
 
 ## KYA
 
