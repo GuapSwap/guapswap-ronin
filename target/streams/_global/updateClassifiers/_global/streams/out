@@ -1,7 +1,0 @@
-[debug] not up to date. inChanged = true, force = false
-[debug] Updating ProjectRef(uri("file:/Users/luca/development/guapswap-ronin/"), "root")...
-[debug] Done updating ProjectRef(uri("file:/Users/luca/development/guapswap-ronin/"), "root")
-[debug] found version conflict(s) in library dependencies; some are suspected to be binary incompatible:
-[debug] 	* org.typelevel:cats-kernel_2.12:2.6.1 (semver-spec) is selected over 0.9.0
-[debug] 	    +- org.typelevel:cats-core_2.12:2.6.1                 (depends on 2.6.1)
-[debug] 	    +- org.typelevel:algebra_2.12:0.7.0                   (depends on 0.9.0)
