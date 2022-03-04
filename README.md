@@ -12,7 +12,7 @@ GuapSwap-Ronin CLI for the solo Ergo miner.
 ### Usage Steps
 
 1. Run your own node.
-2. Clone/download repository or source folder.
+2. Download the latest release to minimize your own risk, or clone/download repository if you are adventurous. 
 3. Install Java (JRE, JDK, or OpenJDK).
 4. Modify the settings in the config file, and insert one of the available token tickers.
 5. Run `java -jar guapswap-ronin-1.0.0-beta.jar --help` to get command usage directions. Use the `--help` flag after any command to get usage directions.
