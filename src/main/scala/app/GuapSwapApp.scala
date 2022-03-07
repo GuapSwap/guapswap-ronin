@@ -24,7 +24,7 @@ import org.ergoplatform.appkit.NetworkType
 object GuapSwapApp extends CommandIOApp(
     name = "guapswap-ronin",
     header = "GuapSwap-Ronin CLI for the solo Ergo miner.",
-    version = "1.0.0-beta"
+    version = "1.0.1-beta"
 ) {
 
     override def main: Opts[IO[ExitCode]] = {
@@ -90,7 +90,7 @@ object GuapSwapApp extends CommandIOApp(
 
                         // Print guapswap onetime initiated status message
                         println(Console.YELLOW + "========== GUAPSWAP ONETIME TX INITIATED ==========" + Console.RESET)
-                        val onetimeSwapTxId: String = GuapSwapInteractions.guapswapOneTime(ergoClient, parameters, proxyAddress, unlockedSecretStorage)
+                        val onetimeSwapTxId: String = GuapSwapInteractions.guapswapOneTime(ergoClient, nodeConfig, parameters, proxyAddress, unlockedSecretStorage)
 
                         // Print out guapswap succeeded status message
                         println(Console.GREEN + "========== GUAPSWAP ONETIME TX SUCCESSFULL ==========" + Console.RESET)
@@ -107,7 +107,7 @@ object GuapSwapApp extends CommandIOApp(
                         
                         // Print guapswap initiated status message
                         println(Console.YELLOW + "========== GUAPSWAP AUTOMATIC MODE STARTED ==========" + Console.RESET)
-                        GuapSwapInteractions.guapswapAutomatic(ergoClient, parameters, proxyAddress, unlockedSecretStorage)
+                        GuapSwapInteractions.guapswapAutomatic(ergoClient, nodeConfig, parameters, proxyAddress, unlockedSecretStorage)
 
                     }
                     
@@ -128,7 +128,7 @@ object GuapSwapApp extends CommandIOApp(
                     
                     // Print guapswap initiating status message
                     println(Console.YELLOW + "========== GUAPSWAP REFUND TX INITIATED ==========" + Console.RESET)
-                    val refundTxId: String = GuapSwapInteractions.guapswapRefund(ergoClient, parameters, proxyAddress, unlockedSecretStorage)
+                    val refundTxId: String = GuapSwapInteractions.guapswapRefund(ergoClient, nodeConfig, parameters, proxyAddress, unlockedSecretStorage)
 
                     // TODO: check if tx is even possible
                     // Print out guapswap initiated status message

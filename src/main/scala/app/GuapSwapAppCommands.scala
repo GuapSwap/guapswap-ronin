@@ -126,7 +126,13 @@ object GuapSwapAppCommands {
       */
     object GuapSwapInteractions {
 
-        // Command to generate a proxy address
+        /**
+          * Command to generate a GuapSwap proxy address.
+          *
+          * @param ergoClient
+          * @param parameters
+          * @return A proxy address string to be inserted into a miner.
+          */
         def generateProxyAddress(ergoClient: ErgoClient, parameters: GuapSwapParameters): String = {
 
             // TODO: Chose proxy script based type of DEXs on Ergo, right now just defaults to ErgoDex => will need to add dex param choice to guapswapParameterSettings and match statement
@@ -151,12 +157,13 @@ object GuapSwapAppCommands {
           * Perform a onetime swap.
           *
           * @param ergoClient
+          * @param nodeConfig
           * @param parameters
           * @param proxyAddress
           * @param unlockedSecretStorage
           * @return Onetime GuapSwap transaction ID string.
           */
-        def guapswapOneTime(ergoClient: ErgoClient, parameters: GuapSwapParameters, proxyAddress: String, unlockedSecretStorage: SecretStorage): String = {
+        def guapswapOneTime(ergoClient: ErgoClient, nodeConfig: GuapSwapNodeConfig, parameters: GuapSwapParameters, proxyAddress: String, unlockedSecretStorage: SecretStorage): String = {
             
             // TODO: Check the parameters to make sure it corresponds to the appropriate DEX
             // Get the dex proxy script
@@ -252,6 +259,11 @@ object GuapSwapAppCommands {
 
                 // Create prover
                 val prover: ErgoProver = ctx.newProverBuilder()
+                    // Used for debugging
+                    // .withMnemonic(
+                    //     SecretString(nodeConfig.wallet.mnemonic),
+                    //     SecretString.empty()
+                    // )
                     .withSecretStorage(unlockedSecretStorage)
                     .build();
 
@@ -277,11 +289,12 @@ object GuapSwapAppCommands {
           * Launch the automatic swap
           *
           * @param ergoClient
+          * @param nodeConfig
           * @param parameters
           * @param proxyAddress
           * @param unlockedSecretStorage
           */
-        def guapswapAutomatic(ergoClient: ErgoClient, parameters: GuapSwapParameters, proxyAddress: String, unlockedSecretStorage: SecretStorage): Unit = {
+        def guapswapAutomatic(ergoClient: ErgoClient, nodeConfig: GuapSwapNodeConfig, parameters: GuapSwapParameters, proxyAddress: String, unlockedSecretStorage: SecretStorage): Unit = {
             
             // Print notification statement
             println(Console.BLUE + "========== Program will run INDEFINITELY and will NOT ask for confirmation to SIGN the TX. To TERMINATE execution, close the terminal session. ==========" + Console.RESET)
@@ -305,7 +318,7 @@ object GuapSwapAppCommands {
                 try {
                     // Print guapswap automatic initiated status message
                     println(Console.YELLOW + "========== GUAPSWAP AUTOMATIC TX INITIATED ==========" + Console.RESET)
-                    val automaticSwapTxId: String = guapswapOneTime(ergoClient, parameters, proxyAddress, unlockedSecretStorage)
+                    val automaticSwapTxId: String = guapswapOneTime(ergoClient, nodeConfig, parameters, proxyAddress, unlockedSecretStorage)
 
                     // Perform a swap
                     println(Console.GREEN + "========== GUAPSWAP AUTOMATIC TX SUCCESSFULL ==========" + Console.RESET)
@@ -316,11 +329,11 @@ object GuapSwapAppCommands {
                             
                     // Print tx link to the user
                     println(Console.BLUE + "========== VIEW GUAPSWAP AUTOMATIC TX IN THE ERGO-EXPLORER WITH THE LINK BELOW ==========" + Console.RESET)
-                    println(GuapSwapUtils.ERGO_EXPLORER_TX_URL_PREFIX + automaticSwapTxId)
+                    println(GuapSwapUtils.getTimeStamp("UTC") + " " + GuapSwapUtils.ERGO_EXPLORER_TX_URL_PREFIX + automaticSwapTxId)
 
                 } catch {
                     case noNodeConnect: ErgoClientException => noNodeConnect
-                    case noProxyBoxes: IndexOutOfBoundsException => println(Console.RED + "========== NO VALID PROXY BOXES FOUND FOR THE AUTOMATIC SWAP TX ==========" + Console.RESET)
+                    case noProxyBoxes: IndexOutOfBoundsException => println(Console.RED + "========== INVALID INPUTS, CHECK CONFIG FILE OR PROXY BOX ==========" + Console.RESET)
                     case error: Throwable => error
                 }
             
@@ -336,12 +349,13 @@ object GuapSwapAppCommands {
           * Refund transaction.
           *
           * @param ergoClient
+          * @param nodeConfig
           * @param parameters
           * @param proxyAddress
           * @param unlockedSecretStorage
           * @return Refund transaction ID string.
           */
-        def guapswapRefund(ergoClient: ErgoClient, parameters: GuapSwapParameters, proxyAddress: String, unlockedSecretStorage: SecretStorage): String = {
+        def guapswapRefund(ergoClient: ErgoClient, nodeConfig: GuapSwapNodeConfig, parameters: GuapSwapParameters, proxyAddress: String, unlockedSecretStorage: SecretStorage): String = {
             
             // Generate blockchain context
             val refundTxId: String = ergoClient.execute((ctx: BlockchainContext) => {
@@ -381,6 +395,11 @@ object GuapSwapAppCommands {
 
                 // Create prover
                 val prover: ErgoProver = ctx.newProverBuilder()
+                    // Used for debugging
+                    // .withMnemonic(
+                    //     SecretString.create(nodeConfig.wallet.mnemonic),
+                    //     SecretString.empty()
+                    // )
                     .withSecretStorage(unlockedSecretStorage)                   
                     .build();
 
