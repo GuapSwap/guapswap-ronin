@@ -1,6 +1,8 @@
 # guapswap-ronin
 GuapSwap-Ronin CLI for the solo Ergo miner.
 
+**THIS REPOSITORY HAS BEEN ARCHIVED**
+
 ## KYA
 
 1. Use at your own risk.
